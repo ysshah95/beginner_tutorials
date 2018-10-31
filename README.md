@@ -30,7 +30,7 @@ catkin_make
 ## Running the Code
 After following the build instructions, run following commands in seperate terminals. Make sure your current directory in terminal is ~/catkin_ws/.
 
-Set environment variables and run roscore in that terminal:
+Set environment variables and run roscore in that terminal: 
 ```
 source devel/setup.bash
 roscore
