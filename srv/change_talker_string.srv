@@ -1,0 +1,5 @@
+# Request parameter of the service to server
+string request_service
+---
+# Response of the the service to client 
+string response_service 
