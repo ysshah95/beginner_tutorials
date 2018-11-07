@@ -40,7 +40,8 @@
 #include "beginner_tutorials/change_talker_string.h"
 
 // Initialize the base string to print
-std::string str_text = "ENPM808X: Software Development. The count has reached: ";
+std::string str_text = "ENPM808X: Software Development."
+                          " The count has reached: ";
 
 /**
  * @brief string_change
@@ -51,7 +52,8 @@ std::string str_text = "ENPM808X: Software Development. The count has reached: "
  * @return bool value of success
  */
 bool string_change(beginner_tutorials::change_talker_string::Request& request,
-                           beginner_tutorials::change_talker_string::Response& resp) {
+                           beginner_tutorials::change_talker_string::Response&
+                            resp) {
   resp.response_service = request.request_service;
   str_text = resp.response_service + ". The count has reached: ";
   // Warn that the message being published is changed
@@ -107,11 +109,10 @@ int main(int argc, char **argv) {
   if (!ok) {
     ROS_ERROR_STREAM("Could not get the parameter");
     frequency = 10;
-  }
-  else{
+  } else {
     ROS_DEBUG_STREAM("Using the param frequency: " << frequency);
     if (frequency ==0) {
-      ROS_FATAL_STREAM ("No message to publish at 0 frequency.");
+      ROS_FATAL_STREAM("No message to publish at 0 frequency.");
       ros::shutdown();
     }
   }
