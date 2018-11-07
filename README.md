@@ -23,11 +23,13 @@ catkin_make
 source devel/setup.bash
 cd src/
 git clone --recursive https://github.com/ysshah95/beginner_tutorials.git
+git branch -a
+git checkout Week10_HW
 cd ..
 catkin_make
 ```
 
-## Running the Code
+## Running the Code using rosrun
 After following the build instructions, run following commands in seperate terminals. Make sure your current directory in terminal is ~/catkin_ws/.
 
 Set environment variables and run roscore in that terminal: 
@@ -50,5 +52,36 @@ rosrun beginner_tutorials listener
 
 >Note: Just like the path of the ROS was sourced in .bashrc file (after installing ROS), same needs to be done for this workspace by writing ```source <path to workspace>/devel/setup.bash``` at the end of the .bashrc file. This avoids the need to source every time one needs to use workspace's packages.
 
+## Running the code using roslaunch
+Instead of running the code in different command windows using rosrun, you can also run all of them together using roslaunch by typing the following command in the terminal. It will start both talker and listener nodes. 
 
+Make sure your current directory in terminal is ~/catkin_ws/.
+
+>Note: roscore launches automatically (if it is not running) after the following command is executed. 
+
+```
+roslaunch beginner_tutorials chatter.launch
+```
+
+You can also change the frequency at which talker node publishes the messages. Use any integer instead of "freq_value" in the following command.
+
+```
+roslaunch beginner_tutorials chatter.launch freq:="freq_value"
+```
+
+## Service
+The talker node is a server that responds to the service requests by change_talker_string service. If you would like to change the string that the talker node publishes, type the following command in the new terminal after both talker and listener nodes are running. It will change the publish message to "new string to be published" in the example below. 
+
+```
+rosservice call /change_talker_string "new string to be published"
+```
+
+## Log Messages
+
+To see the logger messages in the rqt_console GUI, run the comand below after running the roscore, talker and listener nodes from the instructions above.
+
+```
+rosrun rqt_console rqt_console
+```
+You can also refer to the image file in the "rqt_console output" directory. 
 
