@@ -105,8 +105,15 @@ int main(int argc, char **argv) {
   bool ok = ros::param::get("~freq", frequency);
 
   if (!ok) {
-    ROS_FATAL_STREAM("Could not get the parameter");
+    ROS_ERROR_STREAM("Could not get the parameter");
     frequency = 10;
+  }
+  else{
+    ROS_DEBUG_STREAM("Using the param frequency: " << frequency);
+    if (frequency ==0) {
+      ROS_FATAL_STREAM ("No message to publish at 0 frequency.");
+      ros::shutdown();
+    }
   }
 
   ros::Rate loop_rate(frequency);
