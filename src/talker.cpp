@@ -101,7 +101,15 @@ int main(int argc, char **argv) {
 
   auto server = n.advertiseService("change_talker_string", string_change);
 
-  ros::Rate loop_rate(10);
+  int frequency;
+  bool ok = ros::param::get("~freq", frequency);
+
+  if (!ok) {
+    ROS_FATAL_STREAM("Could not get the parameter");
+    frequency = 10;
+  }
+
+  ros::Rate loop_rate(frequency);
 
   /**
    * A count of how many messages we have sent. This is used to create
