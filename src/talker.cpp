@@ -37,6 +37,27 @@
 
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "beginner_tutorials/change_talker_string.h"
+
+// Initialize the base string to print
+std::string str_text = "ENPM808X: Software Development. The count has reached: ";
+
+/**
+ * @brief string_change
+ *
+ * @param  request  The request
+ * @param  resp     The response
+ *
+ * @return bool value of success
+ */
+bool string_change(beginner_tutorials::change_talker_string::Request& request,
+                           beginner_tutorials::change_talker_string::Response& resp) {
+  resp.response_service = request.request_service;
+  str_text = resp.response_service + ". The count has reached: ";
+  // Warn that the message being published is changed
+  ROS_WARN_STREAM("The message being published is changed by service request.");
+  return true;
+}
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
@@ -78,6 +99,8 @@ int main(int argc, char **argv) {
    */
   auto chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
+  auto server = n.advertiseService("change_talker_string", string_change);
+
   ros::Rate loop_rate(10);
 
   /**
@@ -92,7 +115,7 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << "ENPM808X: Software Development. The count has reached: " << count;
+    ss << str_text << count;
     msg.data = ss.str();
     ROS_INFO("%s", msg.data.c_str());
 
