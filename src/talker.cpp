@@ -33,15 +33,10 @@
  * @copyright MIT License (c) 2018  
  */
 
-#include <sstream>
+#include "talker.hpp"
 
-#include "ros/ros.h"
-#include "std_msgs/String.h"
-#include "beginner_tutorials/change_talker_string.h"
-
-// Initialize the base string to print
-std::string str_text = "ENPM808X: Software Development."
-                          " The count has reached: ";
+// Define the message globally
+globalString str;
 
 /**
  * @brief string_change
@@ -55,7 +50,7 @@ bool string_change(beginner_tutorials::change_talker_string::Request& request,
                            beginner_tutorials::change_talker_string::Response&
                             resp) {
   resp.response_service = request.request_service;
-  str_text = resp.response_service + ". The count has reached: ";
+  str.str_text = resp.response_service + ". The count has reached: ";
   // Warn that the message being published is changed
   ROS_WARN_STREAM("The message being published is changed by service request.");
   return true;
@@ -131,7 +126,7 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << str_text << count;
+    ss << str.str_text << count;
     msg.data = ss.str();
     ROS_INFO("%s", msg.data.c_str());
 
