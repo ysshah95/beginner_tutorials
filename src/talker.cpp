@@ -116,7 +116,7 @@ int main(int argc, char **argv) {
   bool ok = ros::param::get("~freq", frequency);
 
   if (!ok) {
-    ROS_ERROR_STREAM("Could not get the parameter");
+    ROS_INFO_STREAM("Could not get the parameter");
     frequency = 10;
   } else {
     ROS_DEBUG_STREAM("Using the param frequency: " << frequency);
