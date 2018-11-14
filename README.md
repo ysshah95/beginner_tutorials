@@ -25,7 +25,7 @@ cd src/
 git clone --recursive https://github.com/ysshah95/beginner_tutorials.git
 cd beginner_tutorials
 git branch -a
-git checkout Week10_HW
+git checkout Week11_HW
 cd ~/catkin_ws
 catkin_make
 ```
@@ -85,4 +85,106 @@ To see the logger messages in the rqt_console GUI, run the comand below after ru
 rosrun rqt_console rqt_console
 ```
 You can also refer to the image file in the "rqt_console output" directory. 
+
+## TF Frames Inspection
+
+The talker node broadcasts tf transforms to ```/talk``` relative to ```/world``` frame. Run the following command when roscore and talker node are running to print tf transforms usinf ```tf_echo```.  
+
+```
+rosrun tf tf_echo /world /talk
+```
+
+The output after executing tf_echo command looks like below. The reference frame is given first and then the frame to be viewed. 
+
+```
+At time 1542166478.044
+- Translation: [-0.648, 0.761, 0.000]
+- Rotation: in Quaternion [0.000, 0.000, 0.908, 0.419]
+            in RPY (radian) [0.000, -0.000, 2.276]
+            in RPY (degree) [0.000, -0.000, 130.426]
+At time 1542166479.045
+- Translation: [-0.650, 0.760, 0.000]
+- Rotation: in Quaternion [0.000, 0.000, 0.908, 0.418]
+            in RPY (radian) [0.000, -0.000, 2.279]
+            in RPY (degree) [0.000, -0.000, 130.555]
+At time 1542166480.044
+- Translation: [-0.643, 0.765, 0.000]
+- Rotation: in Quaternion [0.000, 0.000, 0.906, 0.422]
+            in RPY (radian) [0.000, -0.000, 2.270]
+            in RPY (degree) [0.000, -0.000, 130.049]
+```
+
+To get more detailed information about the transforms between frames, use ```rosrun tf view_frames``` or ```rosrun rqt_tf_tree rqt_tf_tree``` commands.
+
+## Running ROSTest
+
+Testing is the most important feature of developing softwares in Robotics to ensure that the newly created or modified modules does not break the running version of the code. For this repository, two tests have been created, one to check the existance of the service, and one to ensure the change that the service executes. 
+
+The tests have been written using gtest and rostest. To run the tests execute the following commands. 
+
+```
+cd ~/catkin_ws/
+catkin_make run_tests_beginner_tutorials
+```
+
+Tou can also use rostest to run the tests using the following command.
+
+```
+rostest beginner_tutorials talker_test.launch
+```
+
+The output of the execution of tests looks similar to the one below. 
+
+```
+... logging to /home/yashshah/.ros/log/rostest-ubuntu-21491.log
+[ROSUNIT] Outputting test results to /home/yashshah/.ros/test_results/beginner_tutorials/rostest-test_talker_test.xml
+[Testcase: testtalker_test] ... ok
+
+[ROSTEST]-----------------------------------------------------------------------
+
+[beginner_tutorials.rosunit-talker_test/test_service_existance][passed]
+[beginner_tutorials.rosunit-talker_test/test_Service][passed]
+
+SUMMARY
+ * RESULT: SUCCESS
+ * TESTS: 2
+ * ERRORS: 0
+ * FAILURES: 0
+
+rostest log file is in /home/yashshah/.ros/log/rostest-ubuntu-21491.log
+
+```
+
+## Recording bag files with the launch file
+
+You may run the command below to launch the nodes and record all the topics to a bag file.  
+
+```
+roslaunch beginner_tutorials launchFile.launch record:=true
+```
+
+Press ```ctr+C``` when you want to terminate the recording. The bag file will be in the results/ROSbagFiles directory once the recording is complete.
+
+If you want to launch all the nodes without recording bag file, execute the following command. The default record argument is false.  
+
+```
+roslaunch beginner_tutorials launchFile.launch
+```
+
+## Playing back the bag file with the Listener node demonstration
+
+First, navigate to the folder that has .bag file.
+
+```
+cd ~/catkin_ws/src/beginner_tutorials/results/ROSbagFiles
+```
+
+To inspect the bag file, ensure that the roscore and listener nodes are running. Then in a new terminal, enter the command below.
+
+```
+rosbag play listener.bag
+```
+
+You will be able to see the listener node output on the screen. It would be playing the same messages that were recorded.
+
 
