@@ -48,7 +48,8 @@ TEST(TESTSuite, testexistance) {
   ros::NodeHandle n;
   // Register the client to the service
   ros::ServiceClient client =
-      n.serviceClient<beginner_tutorials::change_talker_string>("change_talker_string");
+        n.serviceClient<beginner_tutorials::change_talker_string>
+                ("change_talker_string");
   // Check if the service exist
   bool ok(client.waitForExistence(ros::Duration(10)));
   EXPECT_TRUE(ok);
@@ -65,7 +66,8 @@ TEST(TESTSuite, test_Service) {
   ros::NodeHandle n;
   // Register the client to the service
   ros::ServiceClient client =
-      n.serviceClient<beginner_tutorials::change_talker_string>("change_talker_string");
+      n.serviceClient<beginner_tutorials::change_talker_string>
+                ("change_talker_string");
   beginner_tutorials::change_talker_string srv;
   // Set the input text
   srv.request.request_service = "example_test";
