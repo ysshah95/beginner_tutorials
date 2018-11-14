@@ -43,7 +43,7 @@
  * @param[in]  TESTSuite          gtest framework
  * @param[in]  testServiceExists  Name of the test
  */
-TEST(TESTSuite, testexistance) {
+TEST(TESTSuite, test_service_existance) {
   // Create node handle
   ros::NodeHandle n;
   // Register the client to the service
