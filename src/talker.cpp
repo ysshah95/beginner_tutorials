@@ -33,10 +33,13 @@
  * @copyright MIT License (c) 2018  
  */
 
+#include <tf/transform_broadcaster.h>
 #include "talker.hpp"
 
 // Define the message globally
 globalString str;
+
+#define PI 3.14
 
 /**
  * @brief string_change
@@ -98,6 +101,17 @@ int main(int argc, char **argv) {
 
   auto server = n.advertiseService("change_talker_string", string_change);
 
+  // Declare the tf broadcaster
+  static tf::TransformBroadcaster br;
+   // Declare the transform frame
+  tf::Transform transform;
+   // Declare the quaternion
+  tf::Quaternion q;
+   // Set the radius
+  double r = 1.0;
+   // Set the angular velocity
+  double w = 2*PI;
+
   int frequency;
   bool ok = ros::param::get("~freq", frequency);
 
@@ -120,6 +134,22 @@ int main(int argc, char **argv) {
    */
   auto count = 0;
   while (ros::ok()) {
+
+    // Find the time
+    double t = ros::Time::now().toSec();
+    // Get the coordinates of the circle
+    double x = r*cos(w*t);
+    double y = r*sin(w*t);
+    double z = 0.0;
+    double theta = w*t;
+     // Set the origin of the transform
+    transform.setOrigin( tf::Vector3(x, y, z));
+     // Set the orientation
+    q.setRPY(0, 0, theta);
+    transform.setRotation(q);
+     // Broadcast the transform
+    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
+
     /**
      * This is a message object. You stuff it with data, and then publish it.
      */
