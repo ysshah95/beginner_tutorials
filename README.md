@@ -160,7 +160,7 @@ rostest log file is in /home/yashshah/.ros/log/rostest-ubuntu-21491.log
 You may run the command below to launch the nodes and record all the topics to a bag file.  
 
 ```
-roslaunch beginner_tutorials launchFile.launch record:=true
+roslaunch beginner_tutorials chatter.launch record:=true
 ```
 
 Press ```ctr+C``` when you want to terminate the recording. The bag file will be in the results/ROSbagFiles directory once the recording is complete.
@@ -168,7 +168,7 @@ Press ```ctr+C``` when you want to terminate the recording. The bag file will be
 If you want to launch all the nodes without recording bag file, execute the following command. The default record argument is false.  
 
 ```
-roslaunch beginner_tutorials launchFile.launch
+roslaunch beginner_tutorials chatter.launch
 ```
 
 ## Playing back the bag file with the Listener node demonstration
